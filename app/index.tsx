@@ -1,7 +1,14 @@
 import { useEffect, useState } from "react";
-import { View, Text, Pressable, ActivityIndicator, Alert } from "react-native";
+import {
+  View,
+  Text,
+  Pressable,
+  ActivityIndicator,
+  Alert,
+  Image,
+} from "react-native";
 import { useRouter } from "expo-router";
-import { Chapter, getChapters } from "@/lib/chapters";
+import { Chapter, getChapters, getLogoUrl } from "@/lib/chapters";
 
 export default function ChapterSelectScreen() {
   const [chapters, setChapters] = useState<Chapter[]>([]);
@@ -16,7 +23,10 @@ export default function ChapterSelectScreen() {
   }, []);
 
   const handleSelect = (chapter: Chapter) => {
-    router.push({ pathname: "/chapter/[id]", params: { id: chapter.id, name: chapter.name } });
+    router.push({
+      pathname: "/chapter/[id]",
+      params: { id: chapter.id, name: chapter.name },
+    });
   };
 
   if (loading) {
@@ -36,22 +46,23 @@ export default function ChapterSelectScreen() {
         Choose an MR chapter to continue
       </Text>
 
-      <View className="gap-3">
+      <View className="flex-row flex-wrap gap-4">
         {chapters.map((chapter) => (
           <Pressable
             key={chapter.id}
             onPress={() => handleSelect(chapter)}
-            className="h-16 rounded-xl bg-gray-100 px-5 flex-row items-center justify-between active:bg-gray-200"
+            className="w-40 rounded-2xl bg-gray-100 overflow-hidden active:opacity-80"
           >
-            <View>
-              <Text className="text-lg font-semibold text-gray-900">
-                {chapter.name}
-              </Text>
-              {chapter.email && (
-                <Text className="text-sm text-gray-500">{chapter.email}</Text>
-              )}
-            </View>
-            <Text className="text-gray-400 text-xl">&rsaquo;</Text>
+            {chapter.logo_path && (
+              <Image
+                source={{ uri: getLogoUrl(chapter.logo_path) }}
+                className="w-full aspect-square"
+                resizeMode="cover"
+              />
+            )}
+            <Text className="text-base font-semibold text-gray-900 px-3 py-3 text-center">
+              {chapter.name}
+            </Text>
           </Pressable>
         ))}
       </View>
