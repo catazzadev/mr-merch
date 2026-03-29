@@ -31,18 +31,18 @@ export default function ChapterSelectScreen() {
 
   if (loading) {
     return (
-      <View className="flex-1 items-center justify-center bg-white">
-        <ActivityIndicator size="large" color="#000" />
+      <View className="flex-1 items-center justify-center bg-surface">
+        <ActivityIndicator size="large" color="#e91e8c" />
       </View>
     );
   }
 
   return (
-    <View className="flex-1 bg-white px-8 pt-20">
-      <Text className="text-3xl font-bold text-gray-900 mb-2">
-        Select your chapter
+    <View className="flex-1 bg-surface px-8 pt-20">
+      <Text className="text-4xl text-white font-bebas tracking-wider mb-1">
+        SELECT YOUR CHAPTER
       </Text>
-      <Text className="text-base text-gray-500 mb-8">
+      <Text className="text-base text-neutral-500 font-montserrat mb-8">
         Choose an MR chapter to continue
       </Text>
 
@@ -51,7 +51,7 @@ export default function ChapterSelectScreen() {
           <Pressable
             key={chapter.id}
             onPress={() => handleSelect(chapter)}
-            className="w-40 rounded-2xl bg-gray-100 overflow-hidden active:opacity-80"
+            className="w-40 rounded-2xl bg-surface-card overflow-hidden active:opacity-80 border border-neutral-800"
           >
             {chapter.logo_path && (
               <Image
@@ -60,7 +60,7 @@ export default function ChapterSelectScreen() {
                 resizeMode="cover"
               />
             )}
-            <Text className="text-base font-semibold text-gray-900 px-3 py-3 text-center">
+            <Text className="text-sm text-white font-montserrat-semibold px-3 py-3 text-center">
               {chapter.name}
             </Text>
           </Pressable>
