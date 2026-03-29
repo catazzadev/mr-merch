@@ -4,17 +4,26 @@ import {
   Text,
   TextInput,
   Pressable,
-  KeyboardAvoidingView,
+  ScrollView,
   Platform,
   Alert,
+  Image,
 } from "react-native";
 import { Link } from "expo-router";
 import { signUp } from "@/lib/auth";
+
+function EyeIcon({ open }: { open: boolean }) {
+  return (
+    <Text className="text-lg text-gray-500">{open ? "\u{1F441}" : "\u{1F441}\u{200D}\u{1F5E8}"}</Text>
+  );
+}
 
 export default function SignupScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const handleSignup = async () => {
@@ -49,17 +58,23 @@ export default function SignupScreen() {
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    <ScrollView
+      contentContainerClassName="flex-grow justify-center px-8 py-12"
+      keyboardShouldPersistTaps="handled"
+      showsVerticalScrollIndicator={false}
       className="flex-1 bg-white"
     >
-      <View className="flex-1 justify-center px-8">
-        <Text className="text-4xl font-bold text-center mb-2 text-gray-900">
-          Mr Merch
-        </Text>
-        <Text className="text-base text-center text-gray-500 mb-12">
-          Create your account
-        </Text>
+        <View className="items-center mb-12">
+          <Image
+            source={require("@/assets/mr-logo.jpeg")}
+            className="w-32 h-32 rounded-full mb-4"
+            resizeMode="cover"
+          />
+          <Text className="text-4xl font-bold text-gray-900">MR Merch</Text>
+          <Text className="text-base text-gray-500 mt-2">
+            Create your account
+          </Text>
+        </View>
 
         <View className="gap-4 mb-6">
           <TextInput
@@ -71,22 +86,38 @@ export default function SignupScreen() {
             autoCapitalize="none"
             keyboardType="email-address"
           />
-          <TextInput
-            className="h-14 rounded-xl bg-gray-100 px-4 text-base text-gray-900"
-            placeholder="Password"
-            placeholderTextColor="#9ca3af"
-            value={password}
-            onChangeText={setPassword}
-            secureTextEntry
-          />
-          <TextInput
-            className="h-14 rounded-xl bg-gray-100 px-4 text-base text-gray-900"
-            placeholder="Confirm password"
-            placeholderTextColor="#9ca3af"
-            value={confirmPassword}
-            onChangeText={setConfirmPassword}
-            secureTextEntry
-          />
+          <View className="relative">
+            <TextInput
+              className="h-14 rounded-xl bg-gray-100 px-4 pr-14 text-base text-gray-900"
+              placeholder="Password"
+              placeholderTextColor="#9ca3af"
+              value={password}
+              onChangeText={setPassword}
+              secureTextEntry={!showPassword}
+            />
+            <Pressable
+              onPress={() => setShowPassword(!showPassword)}
+              className="absolute right-4 top-0 bottom-0 justify-center"
+            >
+              <EyeIcon open={showPassword} />
+            </Pressable>
+          </View>
+          <View className="relative">
+            <TextInput
+              className="h-14 rounded-xl bg-gray-100 px-4 pr-14 text-base text-gray-900"
+              placeholder="Confirm password"
+              placeholderTextColor="#9ca3af"
+              value={confirmPassword}
+              onChangeText={setConfirmPassword}
+              secureTextEntry={!showConfirmPassword}
+            />
+            <Pressable
+              onPress={() => setShowConfirmPassword(!showConfirmPassword)}
+              className="absolute right-4 top-0 bottom-0 justify-center"
+            >
+              <EyeIcon open={showConfirmPassword} />
+            </Pressable>
+          </View>
         </View>
 
         <Pressable
@@ -107,7 +138,6 @@ export default function SignupScreen() {
             </Pressable>
           </Link>
         </View>
-      </View>
-    </KeyboardAvoidingView>
+    </ScrollView>
   );
 }

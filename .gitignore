@@ -3,6 +3,7 @@ node_modules/
 dist/
 .env
 .env.*
+.mcp.json
 *.jks
 *.p8
 *.p12
@@ -12,3 +13,4 @@ dist/
 web-build/
 ios/
 android/
+supabase/.temp
