@@ -9,12 +9,14 @@ import {
 } from "react-native";
 import { Image } from "expo-image";
 import { MaterialIcons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 import { useChapter } from "@/lib/ChapterContext";
 import { ActiveMerch, getActiveMerch } from "@/lib/merch";
 import { getImageUrl } from "@/lib/chapters";
 
 export default function MerchScreen() {
   const { selectedChapter } = useChapter();
+  const router = useRouter();
   const [merch, setMerch] = useState<ActiveMerch[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -104,6 +106,7 @@ export default function MerchScreen() {
                     <View />
                   )}
                   <Pressable
+                    onPress={() => router.push(`/merch/${item.id}`)}
                     className="px-6 py-3 active:scale-95"
                     style={{ backgroundColor: "#262626" }}
                   >
