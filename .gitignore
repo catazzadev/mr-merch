@@ -16,3 +16,4 @@ android/
 supabase/.temp
 *.apk
 .DS_Store
+assets/local_versions
