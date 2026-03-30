@@ -2,7 +2,7 @@
   "expo": {
     "name": "mr-merch",
     "slug": "mr-merch",
-    "owner": "catazzadev",
+    "owner": "catazz",
     "extra": {
       "eas": {
         "projectId": "7472cd3f-668a-4fea-94bd-19946cb5c01c"
@@ -27,7 +27,8 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "softwareKeyboardLayoutMode": "pan"
+      "softwareKeyboardLayoutMode": "pan",
+      "package": "dev.catazza.mrmerch"
     },
     "web": {
       "favicon": "./assets/favicon.png",
