@@ -13,13 +13,14 @@ module.exports = {
       },
       colors: {
         surface: {
-          DEFAULT: "#0a0a0a",
+          DEFAULT: "#0e0e0e",
           card: "#1a1a1a",
           input: "#1f1f1f",
+          high: "#201f1f",
         },
         accent: {
-          DEFAULT: "#e91e8c",
-          light: "#ff4baf",
+          DEFAULT: "#FF007F",
+          light: "#FF3399",
         },
       },
     },

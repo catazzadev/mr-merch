@@ -12,6 +12,7 @@ import {
   Montserrat_600SemiBold,
   Montserrat_700Bold,
 } from "@expo-google-fonts/montserrat";
+import { ChapterProvider } from "@/lib/ChapterContext";
 
 export default function RootLayout() {
   const { session, loading } = useSession();
@@ -41,15 +42,15 @@ export default function RootLayout() {
   if (loading || !fontsLoaded) {
     return (
       <View className="flex-1 items-center justify-center bg-surface">
-        <ActivityIndicator size="large" color="#e91e8c" />
+        <ActivityIndicator size="large" color="#FF007F" />
       </View>
     );
   }
 
   return (
-    <>
+    <ChapterProvider>
       <StatusBar style="light" />
       <Slot />
-    </>
+    </ChapterProvider>
   );
 }
