@@ -60,7 +60,7 @@ export default function MerchOrderScreen() {
       <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
         {/* Back button */}
         <View className="px-6 pt-14 pb-4">
-          <Pressable onPress={() => router.back()} className="flex-row items-center gap-1">
+          <Pressable onPress={() => router.navigate("/(tabs)/merch")} className="flex-row items-center gap-1">
             <MaterialIcons name="arrow-back" size={20} color="#FF007F" />
             <Text className="text-sm font-montserrat-semibold" style={{ color: "#FF007F" }}>
               Back
@@ -71,7 +71,7 @@ export default function MerchOrderScreen() {
         {/* Title */}
         <View className="px-6 mb-8">
           <Text className="text-5xl text-white font-bebas tracking-tight leading-none mb-2">
-            ORDER YOUR GEAR
+            GET YOUR GEAR
           </Text>
           <LinearGradient
             colors={["#FF70B8", "#FF007F"]}
@@ -127,6 +127,21 @@ export default function MerchOrderScreen() {
         {/* Divider */}
         <View className="mx-6 h-[1px] bg-neutral-800 mb-8" />
 
+        {/* How to get it */}
+        <View className="px-6 mb-8">
+          <Text className="text-2xl font-bebas tracking-wide uppercase text-white mb-3">
+            How To Get It
+          </Text>
+          <Text className="text-sm font-montserrat text-neutral-500 leading-relaxed">
+            You can earn your community t-shirt by coming to our runs. {"\n"}You can ask for it when your Heylo check-ins reach a multiple of 5 — at the 5th, 10th, 15th checkin and so on. 
+            Can be requested only once for each t-shirt batch.
+            {"\n"}{"\n"}IMPORTANT: request the t-shirt when you register for the run that unlocks the required check-ins. For example, request it if you have 9 check-ins and you are registered for the 10th run.
+          </Text>
+        </View>
+
+        {/* Divider */}
+        <View className="mx-6 h-[1px] bg-neutral-800 mb-8" />
+
         {/* Size + Gender selection */}
         <View className="px-6 mb-8">
           <View className="flex-row justify-between items-center mb-4">
@@ -174,7 +189,7 @@ export default function MerchOrderScreen() {
                 onPress={() => setSelectedSize(size)}
                 className="flex-1 py-4 items-center justify-center"
                 style={{
-                  borderWidth: selectedSize === size ? 2 : 1,
+                  borderWidth: 2,
                   borderColor: selectedSize === size ? "#FF007F" : "#484847",
                   backgroundColor: selectedSize === size ? "#262626" : "transparent",
                 }}

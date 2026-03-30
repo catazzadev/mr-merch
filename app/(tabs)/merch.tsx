@@ -69,9 +69,10 @@ export default function MerchScreen() {
       ) : (
         <View className="px-6 pb-8 gap-6">
           {merch.map((item) => (
-            <View
+            <Pressable
               key={item.id}
-              className="overflow-hidden"
+              onPress={() => router.push(`/merch/${item.id}`)}
+              className="overflow-hidden active:opacity-90"
               style={{ backgroundColor: "#131313" }}
             >
               {/* Image — 4:5 aspect ratio */}
@@ -119,7 +120,7 @@ export default function MerchScreen() {
                   </Pressable>
                 </View>
               </View>
-            </View>
+            </Pressable>
           ))}
         </View>
       )}
