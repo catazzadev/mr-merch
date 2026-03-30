@@ -7,8 +7,8 @@ export type Chapter = {
   logo_path: string | null;
 };
 
-export function getLogoUrl(logoPath: string): string {
-  const [bucket, ...rest] = logoPath.split("/");
+export function getImageUrl(storagePath: string): string {
+  const [bucket, ...rest] = storagePath.split("/");
   const { data } = supabase.storage.from(bucket).getPublicUrl(rest.join("/"));
   return data.publicUrl;
 }

@@ -5,16 +5,13 @@ import {
   Pressable,
   ActivityIndicator,
   Alert,
-  Image,
   ScrollView,
-  Dimensions,
 } from "react-native";
+import { Image } from "expo-image";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
-import { Chapter, getChapters, getLogoUrl } from "@/lib/chapters";
+import { Chapter, getChapters, getImageUrl } from "@/lib/chapters";
 import { useChapter } from "@/lib/ChapterContext";
-
-const { width: SCREEN_WIDTH } = Dimensions.get("window");
 
 export default function ChaptersScreen() {
   const [chapters, setChapters] = useState<Chapter[]>([]);
@@ -70,16 +67,18 @@ export default function ChaptersScreen() {
             >
               {chapter.logo_path ? (
                 <Image
-                  source={{ uri: getLogoUrl(chapter.logo_path) }}
-                  className="absolute inset-0 w-full h-full opacity-60"
-                  resizeMode="cover"
+                  source={getImageUrl(chapter.logo_path)}
+                  style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, width: "100%", height: "100%", opacity: 0.6 }}
+                  contentFit="cover"
+                  cachePolicy="disk"
+                  recyclingKey={chapter.id}
                 />
               ) : (
                 <View className="absolute inset-0 bg-surface-card" />
               )}
               <LinearGradient
-                colors={["transparent", "rgba(14,14,14,0.9)", "rgba(14,14,14,1)"]}
-                locations={[0, 0.7, 1]}
+                colors={["transparent", "rgba(14,14,14,0.5)", "rgba(14,14,14,0.8)"]}
+                locations={[0, 0.75, 1]}
                 className="absolute inset-0"
               />
               <View className="absolute bottom-0 left-0 p-6 w-full">

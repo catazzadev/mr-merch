@@ -3,17 +3,15 @@ import {
   View,
   Text,
   Pressable,
-  Image,
   ActivityIndicator,
   Alert,
   ScrollView,
-  Dimensions,
 } from "react-native";
+import { Image } from "expo-image";
+import { MaterialIcons } from "@expo/vector-icons";
 import { useChapter } from "@/lib/ChapterContext";
 import { ActiveMerch, getActiveMerch } from "@/lib/merch";
-import { getLogoUrl } from "@/lib/chapters";
-
-const SCREEN_WIDTH = Dimensions.get("window").width;
+import { getImageUrl } from "@/lib/chapters";
 
 export default function MerchScreen() {
   const { selectedChapter } = useChapter();
@@ -32,7 +30,8 @@ export default function MerchScreen() {
   if (!selectedChapter) {
     return (
       <View className="flex-1 items-center justify-center bg-surface px-8">
-        <Text className="text-4xl text-white font-bebas tracking-tight text-center mb-2">
+        <MaterialIcons name="shopping-bag" size={48} color="#333" />
+        <Text className="text-4xl text-white font-bebas tracking-tight text-center mt-4 mb-2">
           NO CHAPTER SELECTED
         </Text>
         <Text className="text-sm text-neutral-500 font-montserrat text-center">
@@ -44,15 +43,13 @@ export default function MerchScreen() {
 
   return (
     <ScrollView className="flex-1 bg-surface" showsVerticalScrollIndicator={false}>
-      <View className="px-6 pt-16 pb-6">
+      {/* Hero header */}
+      <View className="px-6 pt-16 pb-8">
         <Text className="text-6xl text-white font-bebas tracking-tight leading-none">
-          {selectedChapter.name.replace("MR ", "")}
+          ACTIVE MERCH
         </Text>
         <Text className="text-6xl font-bebas tracking-tight leading-none" style={{ color: "#FF007F" }}>
-          MERCH
-        </Text>
-        <Text className="text-sm text-neutral-500 font-montserrat-medium mt-4">
-          Available items for your chapter
+          {selectedChapter.name.replace("MR ", "").toUpperCase()}
         </Text>
       </View>
 
@@ -62,29 +59,64 @@ export default function MerchScreen() {
         </View>
       ) : merch.length === 0 ? (
         <View className="items-center justify-center py-20 px-8">
-          <Text className="text-neutral-600 font-montserrat text-base text-center">
-            No active merch yet
+          <MaterialIcons name="storefront" size={48} color="#333" />
+          <Text className="text-neutral-500 font-montserrat-medium text-base text-center mt-4">
+            No active merch for this chapter yet
           </Text>
         </View>
       ) : (
-        <View className="px-6 pb-8 flex-row flex-wrap gap-4">
+        <View className="px-6 pb-8 gap-6">
           {merch.map((item) => (
-            <Pressable
+            <View
               key={item.id}
-              className="overflow-hidden rounded-2xl bg-surface-card border border-neutral-800 active:scale-[0.97]"
-              style={{ width: (SCREEN_WIDTH - 60) / 2 }}
+              className="overflow-hidden"
+              style={{ backgroundColor: "#131313" }}
             >
-              {item.logo_path && (
-                <Image
-                  source={{ uri: getLogoUrl(item.logo_path) }}
-                  className="w-full aspect-square"
-                  resizeMode="cover"
-                />
-              )}
-              <Text className="text-sm text-white font-montserrat-semibold px-4 py-3 text-center">
-                {item.name}
-              </Text>
-            </Pressable>
+              {/* Image — 4:5 aspect ratio */}
+              <View style={{ aspectRatio: 5 / 4, backgroundColor: "#1a1a1a" }}>
+                {item.logo_path && (
+                  <Image
+                    source={getImageUrl(item.logo_path)}
+                    style={{ width: "100%", height: "100%" }}
+                    contentFit="cover"
+                    cachePolicy="disk"
+                    recyclingKey={item.id}
+                  />
+                )}
+              </View>
+
+              {/* Info */}
+              <View className="p-6">
+                <Text className="text-3xl font-bebas tracking-wide text-white mb-2">
+                  {item.name}
+                </Text>
+                {item.description && (
+                  <Text className="text-sm font-montserrat text-neutral-500 leading-relaxed mb-6">
+                    {item.description}
+                  </Text>
+                )}
+                <View className="flex-row justify-between items-center">
+                  {item.price != null ? (
+                    <Text className="text-xl font-montserrat-bold text-white">
+                      &euro;{item.price.toFixed(2)}
+                    </Text>
+                  ) : (
+                    <View />
+                  )}
+                  <Pressable
+                    className="px-6 py-3 active:scale-95"
+                    style={{ backgroundColor: "#262626" }}
+                  >
+                    <Text
+                      className="font-bebas text-lg tracking-widest"
+                      style={{ color: "#FF007F" }}
+                    >
+                      GET IT
+                    </Text>
+                  </Pressable>
+                </View>
+              </View>
+            </View>
           ))}
         </View>
       )}
